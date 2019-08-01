@@ -1,65 +1,31 @@
 const express = require('express');
+const Promise = require('bluebird');
 const jwt = require('jsonwebtoken');
 
 const app = express();
+const router = require('./router');
 
-app.get('/api', (req, res) => {
-    res.json ({
-        message: 'Welcome to the API'
-    });
+const port = process.env.PORT || 5000;
+
+var bodyParser = require('body-parser');
+ 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
+
+app.use((req, res, next) => {
+    const models = require('./models_sample')
+    const db = {
+        User: new models.User(),
+        Post: new models.Post()
+    };
+    req.db = db;
+    req.jwt = Promise.promisifyAll(jwt);
+    next();
 });
 
-app.post('/api/posts', verifyToken, (req, res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-        if(err) {
-            res.sendStatus(403);
-        } else {
-         res.json({
-            message: 'Post created...',
-            authData
-          });    
-        }
-    });
-   
-});
+router(app);
 
-app.post('/api/login', (req, res) => {
-    // Mock user
-    const user = {
-        id: 1,
-        username: 'kaji',
-        email: 'kaji@gmail.com'
-    }
-
-    jwt.sign({user}, 'secretkey', { expiresIn: '60s' }, (err, token) => {
-        res.json({
-            token
-        });
-    });
-});
-
-// FORMAT OF TOKEN
-// Authorization: Bearer <access_token>
-
-// Verify Token
-function verifyToken(req, res, next){
-    // Get auth header value
-    const bearerHeader = req.headers['authorization'];
-    // Check if bearer is undefined
-    if(typeof bearerHeader !== 'undefined') {
-        // Split at the space
-        const bearer = bearerHeader.split(' ');
-        // Get token from array
-        const bearerToken = bearer[1];
-        // Set the token
-        req.token = bearerToken;
-        // Next middleware
-        next();
-    } else {
-        // Forbidden
-        res.sendStatus(403);
-    }
-
-}
-
-app.listen(5000, () => console.log('Server started on port 5000'));
+app.listen(port, () => console.log(`Server is listening on port ${port}`));
