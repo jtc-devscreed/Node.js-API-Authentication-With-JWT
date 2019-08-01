@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "username": "kaji",
+    "email": "kaji@gmail.com",
+    "school": "informatics"
+  },
+  {
+    "id": 2,
+    "username": "boy_booking",
+    "email": "laging_available@gmail.com",
+    "school": "informatics"
+  },
+  {
+    "id": 3,
+    "username": "boy_ikot",
+    "email": "boy_ikot@gmail.com",
+    "school": "up"
+  }
+]

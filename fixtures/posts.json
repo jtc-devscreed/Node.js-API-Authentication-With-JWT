@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "_user": 1,
+    "title": "Ang una kong experience",
+    "body": "ito ay kwento kung saan ko unang naexperience si ____ itago nalang natin sa pangalang, \"DANG\""
+  },
+  {
+    "id": 2,
+    "_user": 1,
+    "title": "Namimis ko na",
+    "body": "Grabe miss ko na magbooking"
+  },
+  {
+    "id": 3,
+    "_user": 2,
+    "title": "wala lang",
+    "body": "tamang lorem ipsum lang"
+  },
+  {
+    "id": 4,
+    "_user": 3,
+    "title": "Sample",
+    "body": "Sample posts"
+  }
+]
